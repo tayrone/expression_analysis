@@ -9,6 +9,7 @@ rm(list = ls())
 
 rm(list = ls())
 
+
 #---- 1_signature_preprocessing.R ----
 
 signature_samples <- "./input_files/signature_complete_set"
@@ -20,7 +21,10 @@ signature_bad_samples <- c('GSM80618.CEL', 'GSM918580_mbt006-u133v2.CEL',
 
 source("1_signature_preprocessing.R")
 
+print("Script 1: Finished.")
+
 rm(list = ls())
+
 
 #---- 2_signature_dictionary.R ----
 
@@ -38,7 +42,10 @@ for(rdata_file in preprocessed_signatures){
   gdata::keep(rdata_file, preprocessed_signatures, sure = TRUE)
 }
 
+print("Script 2: Finished.")
+
 rm(list = ls())
+
 
 #---- 3_signature.R ----
 
@@ -62,6 +69,8 @@ for(subgroup in subgroups){
   
 }
 
+print("Script 3: Finished.")
+
 rm(list = ls())
 
 
@@ -69,59 +78,62 @@ rm(list = ls())
 
 subgroups <- c("wnt", "shh", "group3", "group4", "groups34")
 
+
+bad_samples_list <- 
+  list(wnt = c("GSM2261712.CEL", "GSM2262154.CEL", "GSM2262232.CEL"),
+       shh = c("GSM2261629.CEL", "GSM2261633.CEL", "GSM2261689.CEL", 
+               "GSM2261954.CEL", "GSM2261982.CEL", "GSM2262027.CEL",
+               "GSM2262066.CEL", "GSM2262074.CEL", "GSM2262084.CEL",
+               "GSM2262099.CEL", "GSM2262115.CEL", "GSM2262156.CEL",
+               "GSM2262165.CEL", "GSM2262178.CEL", "GSM2262189.CEL",
+               "GSM2262233.CEL", "GSM2262278.CEL", "GSM2262284.CEL",
+               "GSM2262286.CEL", "GSM2262295.CEL"),
+       group3 = c("GSM2261560.CEL", "GSM2261881.CEL", "GSM2262097.CEL", 
+                  "GSM2262155.CEL", "GSM2262229.CEL"),
+       group4 = c("GSM2261610.CEL", "GSM2261640.CEL", "GSM2261831.CEL",
+                  "GSM2261884.CEL", "GSM2261985.CEL", "GSM2262013.CEL", 
+                  "GSM2262041.CEL", "GSM2262042.CEL", "GSM2262077.CEL",
+                  "GSM2262148.CEL", "GSM2262149.CEL", "GSM2262161.CEL",
+                  "GSM2262162.CEL", "GSM2262163.CEL", "GSM2262166.CEL",
+                  "GSM2262219.CEL", "GSM2262231.CEL", "GSM2262264.CEL",
+                  "GSM2262268.CEL", "GSM2262276.CEL", "GSM2262303.CEL",
+                  "GSM2262313.CEL"),
+       groups34 = c("GSM2261560.CEL", "GSM2261881.CEL", "GSM2262097.CEL", 
+                    "GSM2262155.CEL", "GSM2262229.CEL", "GSM2261610.CEL", 
+                    "GSM2261640.CEL", "GSM2261831.CEL", "GSM2262313.CEL",
+                    "GSM2261884.CEL", "GSM2261985.CEL", "GSM2262013.CEL", 
+                    "GSM2262041.CEL", "GSM2262042.CEL", "GSM2262077.CEL",
+                    "GSM2262148.CEL", "GSM2262149.CEL", "GSM2262161.CEL",
+                    "GSM2262162.CEL", "GSM2262163.CEL", "GSM2262166.CEL",
+                    "GSM2262219.CEL", "GSM2262231.CEL", "GSM2262264.CEL",
+                    "GSM2262268.CEL", "GSM2262276.CEL", "GSM2262303.CEL"))
+
+
 for(subgroup in subgroups){
   
   source("4_network_dictionary.R")
   
-  gdata::keep(subgroup, subgroups, sure = TRUE)
+  gdata::keep(subgroup, subgroups, bad_samples_list, sure = TRUE)
   
 }
 
+print("Script 4: Finished.")
+
 rm(list = ls())
+
 
 #---- "5_tfs.R" ----
 
 subgroups <- c("wnt", "shh", "group3", "group4", "groups34")
 
-bad_samples_list <- list(wnt = c("GSM2261712.CEL", "GSM2262154.CEL", "GSM2262232.CEL"),
-                    shh = c("GSM2261629.CEL", "GSM2261633.CEL", "GSM2261689.CEL", 
-                            "GSM2261954.CEL", "GSM2261982.CEL", "GSM2262027.CEL",
-                            "GSM2262066.CEL", "GSM2262074.CEL", "GSM2262084.CEL",
-                            "GSM2262099.CEL", "GSM2262115.CEL", "GSM2262156.CEL",
-                            "GSM2262165.CEL", "GSM2262178.CEL", "GSM2262189.CEL",
-                            "GSM2262233.CEL", "GSM2262278.CEL", "GSM2262284.CEL",
-                            "GSM2262286.CEL", "GSM2262295.CEL"),
-                    group3 = c("GSM2261560.CEL", "GSM2261881.CEL", "GSM2262097.CEL", 
-                               "GSM2262155.CEL", "GSM2262229.CEL"),
-                    group4 = c("GSM2261610.CEL", "GSM2261640.CEL", "GSM2261831.CEL",
-                               "GSM2261884.CEL", "GSM2261985.CEL", "GSM2262013.CEL", 
-                               "GSM2262041.CEL", "GSM2262042.CEL", "GSM2262077.CEL",
-                               "GSM2262148.CEL", "GSM2262149.CEL", "GSM2262161.CEL",
-                               "GSM2262162.CEL", "GSM2262163.CEL", "GSM2262166.CEL",
-                               "GSM2262219.CEL", "GSM2262231.CEL", "GSM2262264.CEL",
-                               "GSM2262268.CEL", "GSM2262276.CEL", "GSM2262303.CEL",
-                               "GSM2262313.CEL"),
-                    groups34 = c("GSM2261560.CEL", "GSM2261881.CEL", "GSM2262097.CEL", 
-                                 "GSM2262155.CEL", "GSM2262229.CEL", "GSM2261610.CEL", 
-                                 "GSM2261640.CEL", "GSM2261831.CEL", "GSM2262313.CEL",
-                                 "GSM2261884.CEL", "GSM2261985.CEL", "GSM2262013.CEL", 
-                                 "GSM2262041.CEL", "GSM2262042.CEL", "GSM2262077.CEL",
-                                 "GSM2262148.CEL", "GSM2262149.CEL", "GSM2262161.CEL",
-                                 "GSM2262162.CEL", "GSM2262163.CEL", "GSM2262166.CEL",
-                                 "GSM2262219.CEL", "GSM2262231.CEL", "GSM2262264.CEL",
-                                 "GSM2262268.CEL", "GSM2262276.CEL", "GSM2262303.CEL"))
 
 for(subgroup in subgroups){
-
-  bad_samples <- bad_samples_list[subgroup]
   
   source("5_rtn.R")
 
-  gdata::keep(subgroup, subgroups, bad_samples_list, sure = TRUE)
+  gdata::keep(subgroup, subgroups, sure = TRUE)
+  
+  print(paste0("Script 5: Finished for", subgroup, "."))
   
 }
-
-
-
-
 

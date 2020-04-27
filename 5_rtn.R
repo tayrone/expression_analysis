@@ -1,7 +1,7 @@
 library(data.table)
 library(RTN)
 
-subgroup <- "wnt"
+#subgroup <- "wnt"
 
 load("./rdata_files/tfs.RData")
 load(paste0("./rdata_files/signature/", subgroup, "_signature.RData"))
