@@ -48,7 +48,9 @@ pheno_ids <- pheno_ids[!duplicated(pheno_ids$probe_id), ]
 
 pheno <- as.numeric(pheno_ids$exp_values)
 
-signature_dictionary <- signature_dictionary[order(signature_dictionary$probe_id), ]
+signature_dictionary <- 
+  signature_dictionary[order(signature_dictionary$probe_id), ]
+
 #all(names(pheno) == rownames(signature_dictionary))
 
 names(pheno) <- signature_dictionary$gene

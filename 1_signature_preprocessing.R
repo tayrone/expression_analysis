@@ -44,7 +44,7 @@ rm(gse37418_groups)
 
 #---- Principal component analysis allows checking how data is clustering ----
 
-gexp2 <- transpose(gexp)
+gexp2 <- t(as.matrix(gexp))
 
 gexp.pca2 <- prcomp(gexp2, center = TRUE, scale. = TRUE)
 

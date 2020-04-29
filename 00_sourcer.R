@@ -76,7 +76,7 @@ rm(list = ls())
 
 #---- "4_network_dictionary.R" ----
 
-subgroups <- c("wnt", "shh", "group3", "group4", "groups34")
+subgroups <- c("wnt", "shh", "g3", "g4", "g34")
 
 
 bad_samples_list <- 
@@ -88,9 +88,9 @@ bad_samples_list <-
                "GSM2262165.CEL", "GSM2262178.CEL", "GSM2262189.CEL",
                "GSM2262233.CEL", "GSM2262278.CEL", "GSM2262284.CEL",
                "GSM2262286.CEL", "GSM2262295.CEL"),
-       group3 = c("GSM2261560.CEL", "GSM2261881.CEL", "GSM2262097.CEL", 
+       g3 = c("GSM2261560.CEL", "GSM2261881.CEL", "GSM2262097.CEL", 
                   "GSM2262155.CEL", "GSM2262229.CEL"),
-       group4 = c("GSM2261610.CEL", "GSM2261640.CEL", "GSM2261831.CEL",
+       g4 = c("GSM2261610.CEL", "GSM2261640.CEL", "GSM2261831.CEL",
                   "GSM2261884.CEL", "GSM2261985.CEL", "GSM2262013.CEL", 
                   "GSM2262041.CEL", "GSM2262042.CEL", "GSM2262077.CEL",
                   "GSM2262148.CEL", "GSM2262149.CEL", "GSM2262161.CEL",
@@ -98,7 +98,7 @@ bad_samples_list <-
                   "GSM2262219.CEL", "GSM2262231.CEL", "GSM2262264.CEL",
                   "GSM2262268.CEL", "GSM2262276.CEL", "GSM2262303.CEL",
                   "GSM2262313.CEL"),
-       groups34 = c("GSM2261560.CEL", "GSM2261881.CEL", "GSM2262097.CEL", 
+       g34 = c("GSM2261560.CEL", "GSM2261881.CEL", "GSM2262097.CEL", 
                     "GSM2262155.CEL", "GSM2262229.CEL", "GSM2261610.CEL", 
                     "GSM2261640.CEL", "GSM2261831.CEL", "GSM2262313.CEL",
                     "GSM2261884.CEL", "GSM2261985.CEL", "GSM2262013.CEL", 
@@ -124,8 +124,7 @@ rm(list = ls())
 
 #---- "5_tfs.R" ----
 
-subgroups <- c("wnt", "shh", "group3", "group4", "groups34")
-
+subgroups <- c("wnt", "shh", "g3", "g4", "g34")
 
 for(subgroup in subgroups){
   

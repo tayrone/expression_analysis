@@ -25,16 +25,19 @@ if(rownames(dictionary) == rownames(gexp))
 
 rtni <- tni.constructor(expData = gexp, regulatoryElements = tfs)
 
-rtni <- tni.permutation(rtni) # Beware: this insctruction may take a long time to process
+# Beware: this insctruction may take a really long time to process
+rtni <- tni.permutation(rtni) 
 
 rtni <- tni.bootstrap(rtni) # Unstable interactions are removed
-rtni <- tni.dpi.filter(rtni) #Removes the weakest links on TF-TF-target triangle interactions
+
+# Removes the weakest links on TF-TF-target triangle interactions
+rtni <- tni.dpi.filter(rtni) 
 
 tni.get(rtni, what = "summary")
 refnet <- tni.get(rtni, what = "refnet")
 tnet <- tni.get(rtni, what = "tnet")
 
-#g <- tni.graph(rtni) #saves final network, ready to plot using RedeR package
+#g <- tni.graph(rtni) # Saves final network, ready to be plotted by RedeR package
 
 #---- TNA processing ----
 
