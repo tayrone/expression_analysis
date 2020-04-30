@@ -136,3 +136,4 @@ for(subgroup in subgroups){
   
 }
 
+rm(list = ls())

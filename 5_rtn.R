@@ -20,8 +20,7 @@ rm(tfs_)
 
 gexp <- as.matrix(gexp)
 
-if(rownames(dictionary) == rownames(gexp))
-  rownames(gexp) <- dictionary$gene_symbol
+rownames(gexp) <- dictionary$gene_symbol
 
 rtni <- tni.constructor(expData = gexp, regulatoryElements = tfs)
 
@@ -55,6 +54,6 @@ tna <- tna.get(rtna, what = "mra")
 
 RegScores <- tni.gsea2(rtni)
 
-save(rtni, rtna, file = paste("./rdata_files/network/", subgroup, "_rtn.RData"))
+save(rtni, rtna, file = paste0("./rdata_files/network/", subgroup, "_rtn.RData"))
 
 
