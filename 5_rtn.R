@@ -56,4 +56,3 @@ RegScores <- tni.gsea2(rtni)
 
 save(rtni, rtna, file = paste0("./rdata_files/network/", subgroup, "_rtn.RData"))
 
-
