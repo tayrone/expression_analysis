@@ -32,8 +32,8 @@ rm(gene_symbol, platform_data)
 
 samples <- paste0("./input_files/", subgroup)
 
-bad_samples <- bad_samples_list[subgroup]
-bad_samples <- paste0("./input_files/", subgroup, "/", bad_samples)
+bad_samples <- unlist(bad_samples_list[subgroup])
+bad_samples <- sapply(bad_samples, function(x) paste0(samples, "/", x))
 
 celFiles <- list.celfiles(samples, full.names = TRUE)
 celFiles <- celFiles[!(celFiles %in% bad_samples)]
@@ -43,7 +43,6 @@ gexp <- read.celfiles(celFiles)
 gexp <- oligo::rma(gexp) 
 gexp <- oligo::exprs(gexp)
 gexp <- as.data.frame(gexp)
-
 
 rm(samples, celFiles, bad_samples)
 
