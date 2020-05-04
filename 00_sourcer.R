@@ -145,29 +145,47 @@ source("6_mr_intersections.R")
 rm(list = ls())
 
 
-#---- 7_survival_analysis.R ---- # to finish
+#---- "7_survival_analysis.R" ----
 
 subgroups <- c("wnt", "shh", "g3", "g4", "g34")
 
-
-# These are samples which did not pass quality control 
-# bad_samples <- c('MB_SubtypeStudy_55073', 'MB_SubtypeStudy_55103', 'MB_SubtypeStudy_55294', 
-#                  'MB_SubtypeStudy_55347', 'MB_SubtypeStudy_55435', 'MB_SubtypeStudy_55463', 
-#                  'MB_SubtypeStudy_55491', 'MB_SubtypeStudy_55492', 'MB_SubtypeStudy_55527', 
-#                  'MB_SubtypeStudy_55598', 'MB_SubtypeStudy_55599', 'MB_SubtypeStudy_55611', 
-#                  'MB_SubtypeStudy_55612', 'MB_SubtypeStudy_55613', 'MB_SubtypeStudy_55616',
-#                  'MB_SubtypeStudy_55669', 'MB_SubtypeStudy_55681', 'MB_SubtypeStudy_55714', 
-#                  'MB_SubtypeStudy_55718', 'MB_SubtypeStudy_55616', 'MB_SubtypeStudy_55726', 
-#                  'MB_SubtypeStudy_55753', 'MB_SubtypeStudy_55763')
-
+bad_samples_list <- 
+  list(wnt = c("GSM2261712.CEL", "GSM2262154.CEL", "GSM2262232.CEL"),
+       shh = c("GSM2261629.CEL", "GSM2261633.CEL", "GSM2261689.CEL", 
+               "GSM2261954.CEL", "GSM2261982.CEL", "GSM2262027.CEL",
+               "GSM2262066.CEL", "GSM2262074.CEL", "GSM2262084.CEL",
+               "GSM2262099.CEL", "GSM2262115.CEL", "GSM2262156.CEL",
+               "GSM2262165.CEL", "GSM2262178.CEL", "GSM2262189.CEL",
+               "GSM2262233.CEL", "GSM2262278.CEL", "GSM2262284.CEL",
+               "GSM2262286.CEL", "GSM2262295.CEL"),
+       g3 = c("GSM2261560.CEL", "GSM2261881.CEL", "GSM2262097.CEL", 
+              "GSM2262155.CEL", "GSM2262229.CEL"),
+       g4 = c("GSM2261610.CEL", "GSM2261640.CEL", "GSM2261831.CEL",
+              "GSM2261884.CEL", "GSM2261985.CEL", "GSM2262013.CEL", 
+              "GSM2262041.CEL", "GSM2262042.CEL", "GSM2262077.CEL",
+              "GSM2262148.CEL", "GSM2262149.CEL", "GSM2262161.CEL",
+              "GSM2262162.CEL", "GSM2262163.CEL", "GSM2262166.CEL",
+              "GSM2262219.CEL", "GSM2262231.CEL", "GSM2262264.CEL",
+              "GSM2262268.CEL", "GSM2262276.CEL", "GSM2262303.CEL",
+              "GSM2262313.CEL"),
+       g34 = c("GSM2261560.CEL", "GSM2261881.CEL", "GSM2262097.CEL", 
+               "GSM2262155.CEL", "GSM2262229.CEL", "GSM2261610.CEL", 
+               "GSM2261640.CEL", "GSM2261831.CEL", "GSM2262313.CEL",
+               "GSM2261884.CEL", "GSM2261985.CEL", "GSM2262013.CEL", 
+               "GSM2262041.CEL", "GSM2262042.CEL", "GSM2262077.CEL",
+               "GSM2262148.CEL", "GSM2262149.CEL", "GSM2262161.CEL",
+               "GSM2262162.CEL", "GSM2262163.CEL", "GSM2262166.CEL",
+               "GSM2262219.CEL", "GSM2262231.CEL", "GSM2262264.CEL",
+               "GSM2262268.CEL", "GSM2262276.CEL", "GSM2262303.CEL"))
 
 
 for(subgroup in subgroups){
   
   source("7_survival_analysis.R")
   
-  gdata::keep(subgroup, subgroups, sure = T)
+  gdata::keep(subgroup, subgroups, bad_samples_list, sure = T)
 
+  paste0("Finished for ", subgroup)
 }
 
 rm(list = ls())
