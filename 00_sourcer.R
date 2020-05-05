@@ -189,3 +189,14 @@ for(subgroup in subgroups){
 }
 
 rm(list = ls())
+
+
+#---- "8_rtn_duals.R" ----
+
+subgroups <- c("wnt", "shh", "g3", "g4", "g34")
+
+for(subgroup in subgroups){
+  source("8_rtn_duals.R")
+}
+
+rm(list = ls())
