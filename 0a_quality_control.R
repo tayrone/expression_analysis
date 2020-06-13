@@ -1,5 +1,5 @@
-#---- This script generates quality reports for all data assessed 
-# in this workflow ----
+# This script generates quality reports for all data assessed 
+# in this workflow.
 
 library(oligo)
 library(arrayQualityMetrics)

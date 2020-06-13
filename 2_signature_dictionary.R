@@ -1,3 +1,5 @@
+# Definition of dictionary for signature data.
+
 library(dplyr)
 library(matrixStats)
 

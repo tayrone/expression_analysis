@@ -3,6 +3,8 @@ library(RTNduals)
 load(paste0("./rdata_files/network/", subgroup, "_rtn.RData"))
 rm(rtna)
 
+#---- Checks co-regulating pairs of transcription factors ----
+
 rmbr <- tni2mbrPreprocess(rtni)
 rmbr <- mbrAssociation(rmbr)
 

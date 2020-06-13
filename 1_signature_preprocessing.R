@@ -82,5 +82,3 @@ for(subgroup in subgroups){
        file = paste0("./rdata_files/signature/", subgroup, "_gexp.RData"))
 }
 
-
-

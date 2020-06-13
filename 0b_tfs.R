@@ -1,6 +1,6 @@
-#---- This scripts loads a list of human transcription factors made
+# This scripts loads a list of human transcription factors made
 # available by Lambert et al (2018). 
-# http://humantfs.ccbr.utoronto.ca/download.php ----
+# http://humantfs.ccbr.utoronto.ca/download.php
 
 library(tidyverse)
 

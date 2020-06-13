@@ -21,8 +21,6 @@ metadata$subgroup[metadata$subgroup == "group4"] <- "g4"
 
 #---- Filtering and value setting make graphs more readable----
 
-#metadata <- metadata[!(metadata$study_id %in% bad_samples), ]
-
 if(subgroup == "g34"){
   metadata <- metadata[(metadata$subgroup == "g3" | metadata$subgroup == "g4"), ]
 }else{
@@ -38,7 +36,7 @@ bad_samples <- bad_samples_list[[subgroup]]
 
 metadata <- metadata[!(subgroup_samples %in% bad_samples), ]
 
-metadata <- metadata %>% drop_na(age, dead, `os (years)`)
+#metadata <- metadata %>% drop_na(age, dead, `os (years)`)
 
 #"event" and "time" variables are required, so we make them easier to identify
 metadata <- dplyr::rename(metadata, event = dead, time = `os (years)`)
@@ -70,8 +68,12 @@ hazardous_regulons <- cox[(cox$Lower95 > 1 | cox$Upper95 < 1), "Regulons"]
 enrichmentScores <- tnsGet(rtns, "regulonActivity")
 survival_data <- tnsGet(rtns, "survivalData")
 
-annotation_col <- data.frame(annotation = survival_data[, "subtype"], 
+annotation_col <- data.frame(annotation = survival_data[, "subgroup"], 
                              row.names = rownames(survival_data))
+
+colors <- list(subgroup = c(g3 = "#507512", g4 = "#15248b"))
+
+graphics.off()
 
 png(paste0("./survival_plots/", subgroup, "/heatmap.png"), 
            units = "in", width = 18, height = 10, res = 500)
@@ -80,10 +82,15 @@ pheatmap(t(enrichmentScores$dif),
          annotation_col = annotation_col,
          show_colnames = FALSE,
          show_rownames = F,
-         annotation_legend = T)
+         annotation_legend = T,
+         treeheight_row = 0,
+         treeheight_col = 10,
+         annotation_colors = colors[1],
+         annotation_names_col = F,
+         annotation_names_row = F,
+         drop_levels = F)
 
-dev.off()
-
+graphics.off()
 
 #---- Kaplan-Meier plots for hazardous regulons are
 # the principal goal of this script ----

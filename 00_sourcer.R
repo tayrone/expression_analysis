@@ -10,6 +10,8 @@ rm(list = ls())
 rm(list = ls())
 
 
+subgroups <- c("g3", "g4")
+
 #---- 1_signature_preprocessing.R ----
 
 signature_samples <- "./input_files/signature_complete_set"
@@ -23,8 +25,8 @@ source("1_signature_preprocessing.R")
 
 print("Script 1: Finished.")
 
-rm(list = ls())
-
+#rm(list = ls())
+gdata::keep(subgroups, sure = T)
 
 #---- 2_signature_dictionary.R ----
 
@@ -44,8 +46,8 @@ for(rdata_file in preprocessed_signatures){
 
 print("Script 2: Finished.")
 
-rm(list = ls())
-
+#rm(list = ls())
+gdata::keep(subgroups, sure = T)
 
 #---- 3_signature.R ----
 
@@ -55,7 +57,7 @@ subgroup_labels <- list(wnt = c(rep("case", 7), rep("control", 8)),
                         g4 = c(rep("case", 36), rep("control", 8)), 
                         g34 = c(rep("case", 51), rep("control", 8)))
 
-subgroups <- c("wnt", "shh", "g3", "g4", "g34")
+#subgroups <- c("wnt", "shh", "g3", "g4", "g34")
 
 for(subgroup in subgroups){
   
@@ -71,12 +73,12 @@ for(subgroup in subgroups){
 
 print("Script 3: Finished.")
 
-rm(list = ls())
-
+#rm(list = ls())
+gdata::keep(subgroups, sure = T)
 
 #---- "4_network_dictionary.R" ----
 
-subgroups <- c("wnt", "shh", "g3", "g4", "g34")
+#subgroups <- c("wnt", "shh", "g3", "g4", "g34")
 
 bad_samples_list <- 
   list(wnt = c("GSM2261712.CEL", "GSM2262154.CEL", "GSM2262232.CEL"),
@@ -118,12 +120,12 @@ for(subgroup in subgroups){
 
 print("Script 4: Finished.")
 
-rm(list = ls())
+#rm(list = ls())
+gdata::keep(subgroups, sure = T)
 
+#---- "5_rtn.R" ----
 
-#---- "5_tfs.R" ----
-
-subgroups <- c("wnt", "shh", "g3", "g4", "g34")
+#subgroups <- c("wnt", "shh", "g3", "g4", "g34")
 
 for(subgroup in subgroups){
   
@@ -135,19 +137,19 @@ for(subgroup in subgroups){
   
 }
 
-rm(list = ls())
-
+#rm(list = ls())
+gdata::keep(subgroups, sure = T)
 
 #---- "6_mr_intersections.R" ----
 
 source("6_mr_intersections.R")
 
-rm(list = ls())
-
+#rm(list = ls())
+gdata::keep(subgroups, sure = T)
 
 #---- "7_survival_analysis.R" ----
 
-subgroups <- c("wnt", "shh", "g3", "g4", "g34")
+#subgroups <- c("wnt", "shh", "g3", "g4", "g34")
 
 bad_samples_list <- 
   list(wnt = c("GSM2261712.CEL", "GSM2262154.CEL", "GSM2262232.CEL"),
@@ -188,15 +190,15 @@ for(subgroup in subgroups){
   paste0("Finished for ", subgroup)
 }
 
-rm(list = ls())
-
+#rm(list = ls())
+gdata::keep(subgroups, sure = T)
 
 #---- "8_rtn_duals.R" ----
 
-subgroups <- c("wnt", "shh", "g3", "g4", "g34")
+#subgroups <- c("wnt", "shh", "g3", "g4", "g34")
 
 for(subgroup in subgroups){
   source("8_rtn_duals.R")
 }
 
-rm(list = ls())
+#rm(list = ls())
