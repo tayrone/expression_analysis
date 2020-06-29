@@ -6,6 +6,7 @@ library(oligo)
 
 load(paste0("./rdata_files/network/", subgroup, "_rtn.RData"))
 
+rm(rtna)
 
 #---- Organizaing metadata makes everything easier later on ----
 
@@ -47,7 +48,12 @@ metadata <- dplyr::select(metadata, time, event, everything())
 #---- All preprocessed data is employed from now on ----
 
 rtns <- tni2tnsPreprocess(rtni, survivalData = metadata, 
-                          time = 1, event = 2)
+                          time = 1, event = 2, endpoint = 20,
+                          pAdjustMethod = "BH")
+
+rm(rtni)
+#bonferroni results in a too-restricted output, compared to BH
+
 rtns <- tnsGSEA2(rtns)
 
 rtns <- tnsCox(rtns)
@@ -63,7 +69,14 @@ rtns <- tnsKM(rtns)
 
 cox <- rtns@results$Cox$Table
 
-hazardous_regulons <- cox[(cox$Lower95 > 1 | cox$Upper95 < 1), "Regulons"]
+km <- rtns@results$KM$Table
+
+hazardous_regulons <- cox[(cox$Lower95 > 1 | cox$Upper95 < 1) &
+                          cox$Adjusted.Pvalue <= 0.01, ]
+
+km <- km[km$Adjusted.Pvalue < 0.01, ]
+
+hazardous_regulons <- base::intersect(hazardous_regulons$Regulons, km$Regulons)
 
 enrichmentScores <- tnsGet(rtns, "regulonActivity")
 survival_data <- tnsGet(rtns, "survivalData")
@@ -101,6 +114,8 @@ if(length(hazardous_regulons) > 0){
             fpath = paste0("./survival_plots/", subgroup), 
             plotpdf = T, plotbatch = T, xlab = "Years")
 }
+
+
 
 save(rtns, hazardous_regulons, file = paste0("./rdata_files/survival/",
                                              subgroup, "_survival.RData"))
