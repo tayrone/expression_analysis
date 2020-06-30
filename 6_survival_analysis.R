@@ -109,8 +109,8 @@ graphics.off()
 # the principal goal of this script ----
 
 if(length(hazardous_regulons) > 0){
-  tnsPlotKM(rtns, regs = hazardous_regulons, 
-            fname = paste0(subgroup, "_km"), 
+  tnsPlotKM(rtns, regs = c("FBXO2", "KIF2C", "PPFIA4"), 
+            fname = "regulons_of_interest_km", 
             fpath = paste0("./survival_plots/", subgroup), 
             plotpdf = T, plotbatch = T, xlab = "Years")
 }
