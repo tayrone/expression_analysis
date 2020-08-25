@@ -30,9 +30,11 @@ gdata::keep(subgroups, sure = T)
 
 #---- 2_signature_dictionary.R ----
 
-preprocessed_signatures <- c("./rdata_files/wnt_gexp", "./rdata_files/shh_gexp",
-                             "./rdata_files/g3_gexp", "./rdata_files/g4_gexp",
-                             "./rdata_files/g34_gexp")
+preprocessed_signatures <- c("./rdata_files/signature/wnt_gexp", 
+                             "./rdata_files/signature/shh_gexp",
+                             "./rdata_files/signature/g3_gexp", 
+                             "./rdata_files/signature/g4_gexp",
+                             "./rdata_files/signature/g34_gexp")
 
 for(rdata_file in preprocessed_signatures){
   
@@ -41,7 +43,7 @@ for(rdata_file in preprocessed_signatures){
   
   source("2_signature_dictionary.R")
   
-  gdata::keep(rdata_file, preprocessed_signatures, sure = TRUE)
+  gdata::keep(rdata_file, preprocessed_signatures, subgroups, sure = TRUE)
 }
 
 print("Script 2: Finished.")
@@ -61,7 +63,7 @@ subgroup_labels <- list(wnt = c(rep("case", 7), rep("control", 8)),
 
 for(subgroup in subgroups){
   
-  load(paste0("./rdata_files/", subgroup, "_gexp_dictionary.RData"))
+  load(paste0("./rdata_files/signature/", subgroup, "_gexp_dictionary.RData"))
   
   labels <- get(subgroup, subgroup_labels)
   
@@ -140,14 +142,8 @@ for(subgroup in subgroups){
 #rm(list = ls())
 gdata::keep(subgroups, sure = T)
 
-#---- "6_mr_intersections.R" ----
 
-source("6_mr_intersections.R")
-
-#rm(list = ls())
-gdata::keep(subgroups, sure = T)
-
-#---- "7_survival_analysis.R" ----
+#---- "6_survival_analysis.R" ----
 
 #subgroups <- c("wnt", "shh", "g3", "g4", "g34")
 
@@ -183,7 +179,7 @@ bad_samples_list <-
 
 for(subgroup in subgroups){
   
-  source("7_survival_analysis.R")
+  source("6_survival_analysis.R")
   
   gdata::keep(subgroup, subgroups, bad_samples_list, sure = T)
 
@@ -193,12 +189,12 @@ for(subgroup in subgroups){
 #rm(list = ls())
 gdata::keep(subgroups, sure = T)
 
-#---- "8_rtn_duals.R" ----
+#---- "7_rtn_duals.R" ----
 
 #subgroups <- c("wnt", "shh", "g3", "g4", "g34")
 
 for(subgroup in subgroups){
-  source("8_rtn_duals.R")
+  source("7_rtn_duals.R")
 }
 
 #rm(list = ls())

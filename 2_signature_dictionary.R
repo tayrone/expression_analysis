@@ -72,5 +72,5 @@ signature_dictionary <- subset(dictionary,
                                rownames(dictionary) %in% rownames(signature_gexp))
 
 save(signature_gexp, signature_dictionary, 
-     file = paste0("./rdata_files/signature/", rdata_file, "_dictionary.RData"))
+     file = paste0(rdata_file, "_dictionary.RData"))
 

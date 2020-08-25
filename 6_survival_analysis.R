@@ -48,7 +48,7 @@ metadata <- dplyr::select(metadata, time, event, everything())
 #---- All preprocessed data is employed from now on ----
 
 rtns <- tni2tnsPreprocess(rtni, survivalData = metadata, 
-                          time = 1, event = 2, endpoint = 20,
+                          time = 1, event = 2,
                           pAdjustMethod = "BH")
 
 rm(rtni)
@@ -72,9 +72,9 @@ cox <- rtns@results$Cox$Table
 km <- rtns@results$KM$Table
 
 hazardous_regulons <- cox[(cox$Lower95 > 1 | cox$Upper95 < 1) &
-                          cox$Adjusted.Pvalue <= 0.01, ]
+                          cox$Adjusted.Pvalue <= 0.06, ]
 
-km <- km[km$Adjusted.Pvalue < 0.01, ]
+km <- km[km$Adjusted.Pvalue < 0.06, ]
 
 hazardous_regulons <- base::intersect(hazardous_regulons$Regulons, km$Regulons)
 
@@ -109,8 +109,8 @@ graphics.off()
 # the principal goal of this script ----
 
 if(length(hazardous_regulons) > 0){
-  tnsPlotKM(rtns, regs = c("FBXO2", "KIF2C", "PPFIA4"), 
-            fname = "regulons_of_interest_km", 
+  tnsPlotKM(rtns, regs = hazardous_regulons, 
+            fname = "g4_km", 
             fpath = paste0("./survival_plots/", subgroup), 
             plotpdf = T, plotbatch = T, xlab = "Years")
 }
