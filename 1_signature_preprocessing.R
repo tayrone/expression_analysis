@@ -65,14 +65,20 @@ rm(gexp2, pca)
 #---- Preprocessed signature objects are required by succeeding scripts ----
 
 conditions <- tolower(conditions)
-subgroups <- c("wnt", "shh", "g3", "g4", "g34")
+subgroups <- c("wnt", "shh", "g3", "g4", "g34", "no_wnt")
 
 for(subgroup in subgroups){
   
-  if(subgroup == "g34")
+  if(subgroup == "g34"){
     subgroup_gexp <- gexp[, which(conditions == "g3" | conditions == "g4")]
-  else
+    
+  }else if(subgroup == "no_wnt"){
+    subgroup_gexp <- gexp[, which(conditions == "g3" | conditions == "g4" | 
+                                  conditions == "shh")]
+    
+  }else{
     subgroup_gexp <- gexp[, which(conditions == subgroup)]
+  }
   
   subgroup_gexp <- cbind(subgroup_gexp, gexp[, which(conditions == "control")])
   

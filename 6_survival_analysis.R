@@ -20,6 +20,14 @@ metadata$subgroup[metadata$subgroup == "group3"] <- "g3"
 metadata$subgroup[metadata$subgroup == "group4"] <- "g4"
 
 
+mb_gsm_dictionary <- read_delim("./input_files/mb_gsm.txt", skip = 1,
+                                col_names = c("acession", "study_id"), 
+                                delim = "\t")[seq(2, 1526, 2), 1:2]
+
+metadata <- full_join(metadata, mb_gsm_dictionary, by = "study_id") %>% 
+            select(acession, everything())
+
+
 #---- Filtering and value setting make graphs more readable----
 
 if(subgroup == "g34"){
@@ -28,21 +36,19 @@ if(subgroup == "g34"){
   metadata <- metadata[metadata$subgroup == subgroup, ]
 }
 
-samples <- paste0("./input_files/", subgroup)
-subgroup_samples <- oligoClasses::list.celfiles(samples, full.names = FALSE)
 
-rownames(metadata) <- subgroup_samples
+bad_samples <- str_remove(bad_samples_list[[subgroup]], ".CEL")
 
-bad_samples <- bad_samples_list[[subgroup]]
+metadata <- filter(metadata, !(acession %in% bad_samples))
 
-metadata <- metadata[!(subgroup_samples %in% bad_samples), ]
 
-#metadata <- metadata %>% drop_na(age, dead, `os (years)`)
+metadata <- metadata %>% 
+            dplyr::rename(event = dead, time = `os (years)`) %>% 
+            select(time, event, everything()) %>% 
+            filter(!is.na(time) & !is.na(event)) %>% 
+            tibble::column_to_rownames("acession")
 
-#"event" and "time" variables are required, so we make them easier to identify
-metadata <- dplyr::rename(metadata, event = dead, time = `os (years)`)
-
-metadata <- dplyr::select(metadata, time, event, everything())
+rownames(metadata) <- paste0(rownames(metadata), ".CEL")
 
 
 #---- All preprocessed data is employed from now on ----
@@ -74,7 +80,7 @@ km <- rtns@results$KM$Table
 hazardous_regulons <- cox[(cox$Lower95 > 1 | cox$Upper95 < 1) &
                           cox$Adjusted.Pvalue <= 0.06, ]
 
-km <- km[km$Adjusted.Pvalue < 0.06, ]
+km <- km[km$Adjusted.Pvalue <= 0.06, ]
 
 hazardous_regulons <- base::intersect(hazardous_regulons$Regulons, km$Regulons)
 
@@ -110,7 +116,7 @@ graphics.off()
 
 if(length(hazardous_regulons) > 0){
   tnsPlotKM(rtns, regs = hazardous_regulons, 
-            fname = "g4_km", 
+            fname = "hazardous_plots", 
             fpath = paste0("./survival_plots/", subgroup), 
             plotpdf = T, plotbatch = T, xlab = "Years")
 }

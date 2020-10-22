@@ -8,13 +8,16 @@ load(paste0("./rdata_files/signature/", subgroup, "_signature.RData"))
 load(paste0("./rdata_files/network/", subgroup, "_network_dictionary.RData"))
 
 
-#---- Check the amount of tfs that are recognized by dictionary object ----
+#---- Check the tfs that are recognized by dictionary object ----
 
-tfs_ <- which(tfs %in% dictionary$gene_symbol)
-
-tfs <- as.character(dictionary$gene_symbol[tfs_])
-
-rm(tfs_)
+# tfs <- tfs[tfs %in% dictionary$gene_symbol]
+# 
+# tfs_ <- tfs[!tfs %in% dictionary$gene_symbol]
+# tfs_ <- which(tfs %in% dictionary$gene_symbol)
+# 
+# tfs_wrong <- as.character(dictionary$gene_symbol[tfs_])
+# 
+# rm(tfs_)
 
 #---- TNI processing ----
 

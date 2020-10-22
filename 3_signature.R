@@ -1,4 +1,9 @@
 library(limma)
+library(tidyverse)
+
+load(paste0("./rdata_files/signature/", subgroup, "_gexp_dictionary.RData"))
+
+labels <- get(subgroup, subgroup_labels)
 
 #---- Set objects required by statistical analysis on this script ----
 
@@ -34,10 +39,16 @@ hits <- as.character(rownames(signature_hits))
 
 hits <- data.frame(probe_id = hits, stringsAsFactors = F)
 hits <- merge(hits, signature_dictionary, by = "probe_id")
+
+probe_regulation <- signature %>% 
+  rownames_to_column("probe_id") %>% 
+  right_join(hits) %>% 
+  select(probe_id, gene, regulation = case...control.2)
+
 hits <- as.character(hits$gene)
 
 
-#---- Pheno contains expression valur for all gene identifiers ----
+#---- Pheno contains expression value for all gene identifiers ----
 
 pheno_ids <- data.frame(probe_id  = rownames(signature), 
                         exp_values = signature$case...control)
@@ -58,5 +69,5 @@ names(pheno) <- signature_dictionary$gene
 
 #---- Hits and pheno are mandatory on the workflow (pheno_ids is optional) ----
 
-save(hits, pheno, pheno_ids, 
+save(hits, pheno, pheno_ids, probe_regulation,
      file = paste0("./rdata_files/signature/", subgroup, "_signature.RData"))

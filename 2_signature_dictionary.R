@@ -15,7 +15,7 @@ dictionary <-
 
 
 dictionary$Gene.Symbol <- 
-  sapply(strsplit(as.character(dictionary$Gene.Symbol), "///"), `[`, 1)
+  sapply(strsplit(as.character(dictionary$Gene.Symbol), " /// "), `[`, 1)
 
 
 colnames(dictionary) <- c("probe_id", "gene")
