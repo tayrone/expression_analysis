@@ -79,12 +79,12 @@ probes_from_duplicated_genes <- cbind(probes_from_duplicated_genes,
 
 probes_with_greatest_variance <- 
   probes_from_duplicated_genes %>% 
-    group_by(gene_symbol) %>%
-    filter(variance == max(variance)) %>%
-    # There are cases of several probes, mapped to the same gene, presenting
-    # the same variance value. This makes the next line of code necessary.
-    filter(row_number(gene_symbol) == 1) %>% 
-    arrange(gene_symbol)
+  group_by(gene_symbol) %>%
+  filter(variance == max(variance)) %>%
+  # There are cases of several probes, mapped to the same gene, presenting
+  # the same variance value. This makes the next line of code necessary.
+  filter(row_number(gene_symbol) == 1) %>% 
+  arrange(gene_symbol)
 
 rm(mtx)
 

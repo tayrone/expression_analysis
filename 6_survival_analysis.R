@@ -32,6 +32,9 @@ metadata <- full_join(metadata, mb_gsm_dictionary, by = "study_id") %>%
 
 if(subgroup == "g34"){
   metadata <- metadata[(metadata$subgroup == "g3" | metadata$subgroup == "g4"), ]
+}else if(subgroup == "no_wnt"){
+  metadata <- metadata[(metadata$subgroup == "g3" | metadata$subgroup == "g4" | 
+                        metadata$subgroup == "shh"), ]
 }else{
   metadata <- metadata[metadata$subgroup == subgroup, ]
 }
@@ -43,19 +46,21 @@ metadata <- filter(metadata, !(acession %in% bad_samples))
 
 
 metadata <- metadata %>% 
-            dplyr::rename(event = dead, time = `os (years)`) %>% 
-            select(time, event, everything()) %>% 
-            filter(!is.na(time) & !is.na(event)) %>% 
-            tibble::column_to_rownames("acession")
+  dplyr::rename(event = dead, time = `os (years)`) %>% 
+  select(time, event, everything()) %>% 
+  filter(!is.na(time) & !is.na(event)) %>% 
+  tibble::column_to_rownames("acession")
 
 rownames(metadata) <- paste0(rownames(metadata), ".CEL")
 
 
 #---- All preprocessed data is employed from now on ----
 
+#metadata$subgroup <- as.numeric(as.factor(metadata$subgroup))
+
 rtns <- tni2tnsPreprocess(rtni, survivalData = metadata, 
                           time = 1, event = 2,
-                          pAdjustMethod = "BH")
+                          pAdjustMethod = "BH", keycovar = "subgroup")
 
 rm(rtni)
 #bonferroni results in a too-restricted output, compared to BH

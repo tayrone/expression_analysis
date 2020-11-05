@@ -5,3 +5,6 @@ rdata_files
 .Rproj.user
 expression_analysis.Rproj
 survival_plots
+heatmap_resumo.png
+kms_resumo.pdf
+resumo_testes.R
